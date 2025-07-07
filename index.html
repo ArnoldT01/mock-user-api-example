@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock User API Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            justify-items: center;
+        }
+
+        .user-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 300px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .user-card img {
+            width: 80%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .user-card p {
+            margin: 5px 0;
+        }
+
+        .user-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .user-card span {
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .user-card {
+                max-width: 100%;
+            }
+        }
+
+        footer {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Mock User API Example</h1>
+</header>
+
+<main id="user-container">
+</main>
+
+<script>
+    fetch('https://raw.githubusercontent.com/ArnoldT01/mock-user-api/refs/heads/main/data.json')
+        .then(response => response.json())
+        .then(data => {
+            const userContainer = document.getElementById('user-container');
+            
+            data.forEach(user => {
+                // Create a user card for each user
+                const userCard = document.createElement('div');
+                userCard.classList.add('user-card');
+                
+                // Add image
+                const img = document.createElement('img');
+                img.src = user.image;
+                img.alt = `${user.name}'s Profile Picture`;
+                userCard.appendChild(img);
+                
+                // Add user details
+                const name = document.createElement('h3');
+                name.textContent = user.name;
+                userCard.appendChild(name);
+                
+                const username = document.createElement('p');
+                username.innerHTML = `<span>Username:</span> ${user.username}`;
+                userCard.appendChild(username);
+                
+                const email = document.createElement('p');
+                email.innerHTML = `<span>Email:</span> ${user.email}`;
+                userCard.appendChild(email);
+                
+                const location = document.createElement('p');
+                location.innerHTML = `<span>Location:</span> ${user.location}`;
+                userCard.appendChild(location);
+                
+                const bio = document.createElement('p');
+                bio.innerHTML = `<span>Bio:</span> ${user.bio}`;
+                userCard.appendChild(bio);
+                
+                // Append the user card to the main container
+                userContainer.appendChild(userCard);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+        });
+</script>
+
+<footer>
+    <p><a href="https://github.com/ArnoldT01">Github</a></p>
+</footer>
+
+</body>
+</html>
